@@ -9,7 +9,8 @@ class CoffeeActivity extends Eloquent
 {
     protected $table = 'activity';
 
-    public function getActivity($id='')
+    
+    public static function getActivity($id='')
     {
         if ($id == ''){
             $activity_list = CoffeeActivity::all();
