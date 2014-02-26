@@ -11,7 +11,13 @@
 |
 */
 
-Route::get('/', function()
+Route::group(array('prefix' => 'v1'), function()
 {
-	return View::make('hello');
+
+    Route::get('/activity/{id?}', function($id = null)
+    {
+            $list = CoffeeActivity::getActivity($id);
+            return Response::json($list);
+    });
+
 });
