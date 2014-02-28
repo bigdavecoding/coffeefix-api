@@ -16,8 +16,14 @@ class Activity extends Migration {
 		{
 			$table->increments('id');
 			$table->string('user_id', 20);
-			$table->timestamp('added_on');
+			$table->timestamp('added_on');        
 		});
+                
+                //set the auto increment counter to above value
+                $statement = "
+                    ALTER SEQUENCE activity_id_seq RESTART WITH 1000;
+                ";
+                DB::unprepared($statement);
 	}
 
 	/**
