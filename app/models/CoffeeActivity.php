@@ -8,8 +8,12 @@
 class CoffeeActivity extends Eloquent
 {
     protected $table = 'activity';
-
+    public $timestamps = false;
     
+    /**
+     * @param int $id
+     * @return Illuminate\Database\Eloquent\Model
+     */
     public static function getActivity($id='')
     {
         if ($id == ''){
@@ -20,5 +24,6 @@ class CoffeeActivity extends Eloquent
         }
         return $activity_list;
     }
+
     
 }
