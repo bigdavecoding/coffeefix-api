@@ -19,5 +19,13 @@ Route::group(array('prefix' => 'v1'), function()
             $list = CoffeeActivity::getActivity($id);
             return Response::json($list);
     });
-
+    
+    Route::post('/activity', function()
+    {
+            $coffee_activity = new CoffeeActivity();
+            $coffee_activity->user_id = 'CHEUNGD';
+            $coffee_activity->added_on = date('Y-m-d H:i:s');
+            $coffee_activity->save();
+            return Response::json($coffee_activity);
+    });
 });
