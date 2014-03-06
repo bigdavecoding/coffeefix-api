@@ -78,3 +78,48 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+
+/*
+|--------------------------------------------------------------------------
+| API Filters
+|--------------------------------------------------------------------------
+|
+| Authentication and rate limiting.
+|
+*/
+
+Route::filter('api.auth', function()
+{
+	if (!Request::getUser())
+	{
+		App::abort(401, 'A valid API key is required');
+	}
+
+	$user = User::where('api_key', '=', Request::getUser())->first();
+
+	if (!$user)
+	{
+		App::abort(401);
+	}
+
+	Auth::login($user);
+});
+
+Route::filter('api.limit', function()
+{
+	$key = sprintf('api:%s', Auth::user()->api_key);
+
+	// Create the key if it doesn't exist
+	Cache::add($key, 0, 60);
+
+	// Increment by 1
+	$count = Cache::increment($key);
+
+	// Fail if hourly requests exceeded
+	if ($count > Config::get('api.requests_per_hour'))
+	{
+		App::abort(403, 'Hourly request limit exceeded');
+	}
+});
+

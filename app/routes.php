@@ -11,7 +11,7 @@
 |
 */
 
-Route::group(array('prefix' => 'v1'), function()
+Route::group(array('prefix' => 'v1', 'before' => 'api.auth|api.limit'), function()
 {
 
     Route::get('/activity/{id?}', function($id = null)
