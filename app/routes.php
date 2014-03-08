@@ -23,7 +23,7 @@ Route::group(array('prefix' => 'v1', 'before' => 'api.auth|api.limit'), function
     Route::post('/activity', function()
     {
             $coffee_activity = new CoffeeActivity();
-            $coffee_activity->user_id = 'CHEUNGD';
+            $coffee_activity->user_id = strtoupper(Auth::user()->username);
             $coffee_activity->added_on = date('Y-m-d H:i:s');
             $coffee_activity->save();
             return Response::json($coffee_activity);
