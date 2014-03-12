@@ -20,6 +20,12 @@ Route::group(array('prefix' => 'v1', 'before' => 'api.auth|api.limit'), function
             return Response::json($list);
     });
     
+    Route::get('/month', function()
+    {
+            $list = CoffeeActivity::getMonthlyActivity();
+            return Response::json($list);
+    });
+    
     Route::post('/activity', function()
     {
             $coffee_activity = new CoffeeActivity();
