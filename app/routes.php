@@ -25,6 +25,12 @@ Route::group(array('prefix' => 'v1', 'before' => 'api.auth|api.limit'), function
             $list = CoffeeActivity::getMonthlyActivity();
             return Response::json($list);
     });
+
+    Route::get('/day', function()
+    {
+            $list = CoffeeActivity::getDailyActivity();
+            return Response::json($list);
+    });    
     
     Route::post('/activity', function()
     {

@@ -39,5 +39,20 @@ class CoffeeActivity extends Eloquent
         $activity_list = DB::select( DB::raw($sql));
         return $activity_list;
     }    
-   
+
+    public static function getDailyActivity()
+    {
+        $sql = "
+        SELECT date_part('year', added_on) AS year
+        , date_part('month', added_on) AS month
+        , date_part('day', added_on) AS day
+        , count(*) AS num_activity
+          FROM activity
+        GROUP BY year, month, day
+        ORDER BY year desc, month desc, day desc"
+        ;
+    
+        $activity_list = DB::select( DB::raw($sql));
+        return $activity_list;
+    }       
 }
