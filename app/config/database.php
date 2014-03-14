@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('America/New_York');
 
 return array(
 
@@ -26,7 +27,7 @@ return array(
 	|
 	*/
 
-	'default' => 'mysql',
+	'default' => 'pgsql',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -65,13 +66,13 @@ return array(
 
 		'pgsql' => array(
 			'driver'   => 'pgsql',
-			'host'     => 'localhost',
-			'database' => 'database',
-			'username' => 'root',
-			'password' => '',
+			'host'     => $_ENV['db_host'],
+			'database' => $_ENV['db_database'],
+			'username' => $_ENV['db_username'],
+			'password' => $_ENV['db_password'],
 			'charset'  => 'utf8',
 			'prefix'   => '',
-			'schema'   => 'public',
+			'schema'   => $_ENV['db_schema'],
 		),
 
 		'sqlsrv' => array(
