@@ -115,9 +115,9 @@ return array(
 		'cluster' => false,
 
 		'default' => array(
-			'host'     => '127.0.0.1',
-			'port'     => 6379,
-			'database' => 0,
+			'host'     => parse_url($_ENV['REDISCLOUD_URL'], PHP_URL_HOST),
+			'port' => parse_url($_ENV['REDISCLOUD_URL'], PHP_URL_PORT),
+			'password' => parse_url($_ENV['REDISCLOUD_URL'], PHP_URL_PASS),
 		),
 
 	),
