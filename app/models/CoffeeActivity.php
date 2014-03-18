@@ -25,18 +25,29 @@ class CoffeeActivity extends Eloquent
         return $activity_list;
     }
 
-    public static function getMonthlyActivity()
+    public static function getMonthlyActivity($year, $month='')
     {
+        $sql_parm = array();
+        $sql_parm['year'] = $year;
+        
+        $sql_and_month = '';
+        if ($month != ''){
+            $sql_and_month = "AND date_part('month', added_on) = :month";
+            $sql_parm['month'] = $month;
+        }
+        
         $sql = "
         SELECT date_part('year', added_on) AS year
         , date_part('month', added_on) AS month
         , count(*) AS num_activity
           FROM activity
+        WHERE date_part('year', added_on) = :year
+        $sql_and_month
         GROUP BY month, year
         ORDER BY year desc, month desc"
         ;
     
-        $activity_list = DB::select( DB::raw($sql));
+        $activity_list = DB::select(DB::raw($sql), $sql_parm);
         return $activity_list;
     }    
 

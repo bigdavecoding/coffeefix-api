@@ -20,9 +20,9 @@ Route::group(array('prefix' => 'v1', 'before' => 'api.auth|api.limit'), function
             return Response::json($list);
     });
     
-    Route::get('/month', function()
+    Route::get('/month/{year}/{month?}', function($year, $month='')
     {
-            $list = CoffeeActivity::getMonthlyActivity();
+            $list = CoffeeActivity::getMonthlyActivity($year, $month);
             return Response::json($list);
     });
 
