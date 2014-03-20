@@ -26,9 +26,9 @@ Route::group(array('prefix' => 'v1', 'before' => 'api.auth|api.limit'), function
             return Response::json($list);
     });
 
-    Route::get('/day', function()
+    Route::get('/day/{year}/{month?}/{day?}', function($year, $month='', $day='')
     {
-            $list = CoffeeActivity::getDailyActivity();
+            $list = CoffeeActivity::getDailyActivity($year, $month, $day);
             return Response::json($list);
     });    
     
