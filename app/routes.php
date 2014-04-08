@@ -20,13 +20,13 @@ Route::group(array('prefix' => 'v1', 'before' => 'api.auth|api.limit'), function
             return Response::json($list);
     });
     
-    Route::get('/month/{year}/{month?}', function($year, $month='')
+    Route::get('/monthly/{year}/{month?}', function($year, $month='')
     {
             $list = CoffeeActivity::getMonthlyActivity($year, $month);
             return Response::json($list);
     });
 
-    Route::get('/day/{year}/{month?}/{day?}', function($year, $month='', $day='')
+    Route::get('/daily/{year}/{month?}/{day?}', function($year, $month='', $day='')
     {
             $list = CoffeeActivity::getDailyActivity($year, $month, $day);
             return Response::json($list);

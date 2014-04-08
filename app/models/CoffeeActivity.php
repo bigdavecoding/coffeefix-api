@@ -13,24 +13,10 @@ class CoffeeActivity extends Eloquent
     
     public $timestamps = false;
     
-    /**
-     * @param int $id
-     * @return Illuminate\Database\Eloquent\Model
-     */
-    public static function getActivity($id='')
-    {
-        if ($id == ''){
-            $activity_list = CoffeeActivity::all();
-        }
-        else{
-            $activity_list = CoffeeActivity::find($id);
-        }
-        return $activity_list;
-    }
-
     public static function getMonthlyActivity($year, $month='')
     {
         $query = DB::Table(self::$monthly_view);
+        $query->where('user_id', '=', Auth::user()->username);
         $query->where('year', '=', $year);
         if ($month != ''){
             $query->where('month', '=', $month);
@@ -41,6 +27,7 @@ class CoffeeActivity extends Eloquent
     public static function getDailyActivity($year, $month='', $day='')
     {
         $query = DB::Table(self::$daily_view);
+        $query->where('user_id', '=', Auth::user()->username);
         $query->where('year', '=', $year);
         if ($month != ''){
             $query->where('month', '=', $month);
