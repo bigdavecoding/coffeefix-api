@@ -13,31 +13,9 @@
 
 Route::group(array('prefix' => 'v1', 'before' => 'api.auth|api.limit'), function()
 {
-
-    Route::get('/activity/{id?}', function($id = null)
-    {
-            $list = CoffeeActivity::getActivity($id);
-            return Response::json($list);
-    });
+    Route::get('/monthly/{year}/{month?}', 'ActivityController@getMonthlyActivity');
     
-    Route::get('/monthly/{year}/{month?}', function($year, $month='')
-    {
-            $list = CoffeeActivity::getMonthlyActivity($year, $month);
-            return Response::json($list);
-    });
-
-    Route::get('/daily/{year}/{month?}/{day?}', function($year, $month='', $day='')
-    {
-            $list = CoffeeActivity::getDailyActivity($year, $month, $day);
-            return Response::json($list);
-    });    
+    Route::get('/daily/{year}/{month?}/{day?}', 'ActivityController@getDailyActivity');
     
-    Route::post('/activity', function()
-    {
-            $coffee_activity = new CoffeeActivity();
-            $coffee_activity->user_id = strtoupper(Auth::user()->username);
-            $coffee_activity->added_on = date('Y-m-d H:i:s');
-            $coffee_activity->save();
-            return Response::json($coffee_activity);
-    });
+    Route::post('/activity', 'ActivityController@postActivity');
 });
