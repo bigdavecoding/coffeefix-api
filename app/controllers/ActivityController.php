@@ -8,22 +8,30 @@
 
 class ActivityController extends BaseController {
 
-        public static function getMonthlyActivity($year, $month = ''){
-            $list = CoffeeActivity::getMonthlyActivity($year, $month);
-            return Response::json($list);
-        }
-
-        public static function getDailyActivity($year, $month = '', $day = ''){
-            $list = CoffeeActivity::getDailyActivity($year, $month, $day);
-            return Response::json($list);
+        public static function getActivity(){
+            $user_id = Auth::user()->username;
+            $year = Input::get('year');
+            $month = Input::get('month');
+            $day = Input::get('day');
+            $groupby = Input::get('groupby');
+            
+            switch($groupby){
+                case 'month':
+                    $search = new MonthlyActivitySearch($user_id, $year, $month);
+                    break;
+                default:
+                    $search = new DailyActivitySearch($user_id, $year, $month, $day);
+            }
+            
+            return Response::json($search->getActivity());
         }
         
-        public static function postActivity()
-        {
-            $coffee_activity = new CoffeeActivity();
-            $coffee_activity->user_id = strtoupper(Auth::user()->username);
-            $coffee_activity->added_on = date('Y-m-d H:i:s');
-            $coffee_activity->save();
-            return Response::json($coffee_activity);            
+        public static function postActivity(){
+            $user_id = strtoupper(Auth::user()->username);
+            $add_timestamp = date('Y-m-d H:i:s');
+            
+            $activity = new ActivityRecord($user_id, $add_timestamp);
+            $activity->save();
+            return Response::json($activity);
         }
 }
