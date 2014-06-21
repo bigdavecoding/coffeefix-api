@@ -13,9 +13,6 @@
 
 Route::group(array('prefix' => 'v1', 'before' => 'api.auth|api.limit'), function()
 {
-    Route::get('/monthly/{year}/{month?}', 'ActivityController@getMonthlyActivity');
-    
-    Route::get('/daily/{year}/{month?}/{day?}', 'ActivityController@getDailyActivity');
-    
+    Route::get('/activity', 'ActivityController@getActivity');   
     Route::post('/activity', 'ActivityController@postActivity');
 });
