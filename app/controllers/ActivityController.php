@@ -8,21 +8,24 @@
 
 class ActivityController extends BaseController {
 
-        public static function getActivity(){
+        protected static function createActivitySearch(){
             $user_id = Auth::user()->username;
             $year = Input::get('year');
             $month = Input::get('month');
             $day = Input::get('day');
             $groupby = Input::get('groupby');
-            
+
             switch($groupby){
                 case 'month':
-                    $search = new MonthlyActivitySearch($user_id, $year, $month);
+                    return new MonthlyActivitySearch($user_id, $year, $month);
                     break;
                 default:
-                    $search = new DailyActivitySearch($user_id, $year, $month, $day);
-            }
-            
+                    return new DailyActivitySearch($user_id, $year, $month, $day);
+            }            
+        }
+    
+        public static function getActivity(){
+            $search = self::createActivitySearch();
             return Response::json($search->getActivity());
         }
         
