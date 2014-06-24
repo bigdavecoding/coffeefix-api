@@ -7,9 +7,13 @@
  */
 
 
-abstract class ActivitySearch extends Eloquent
+abstract class ActivitySearchAbstract extends Eloquent
 {
+    protected $filter;
+    
+    function __construct(SearchFilterInterface $filter){
+        $this->filter = $filter;
+    }
+    
     abstract protected function getActivity();
-    abstract protected function getUserId();
-    abstract protected function getYear();
 }

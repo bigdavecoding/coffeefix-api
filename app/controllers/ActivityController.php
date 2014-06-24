@@ -14,13 +14,14 @@ class ActivityController extends BaseController {
             $month = Input::get('month');
             $day = Input::get('day');
             $groupby = Input::get('groupby');
+            $filters = new SearchFilter($user_id, $year, $month, $day);
 
             switch($groupby){
                 case 'month':
-                    return new MonthlyActivitySearch($user_id, $year, $month);
+                    return new MonthlyActivitySearch($filters);
                     break;
                 default:
-                    return new DailyActivitySearch($user_id, $year, $month, $day);
+                    return new DailyActivitySearch($filters);
             }            
         }
     
