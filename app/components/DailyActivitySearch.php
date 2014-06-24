@@ -1,7 +1,7 @@
 <?php
 
 
-class DailyActivitySearch extends ActivitySearch
+class DailyActivitySearch extends ActivitySearchAbstract
 {
     protected $table = 'activity_daily_view';
 
