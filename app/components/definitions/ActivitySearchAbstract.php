@@ -10,10 +10,16 @@
 abstract class ActivitySearchAbstract extends Eloquent
 {
     protected $filter;
+    protected $user_id;
+    protected $year;
+    protected $month;
+    protected $day;
     
     function __construct(SearchFilterInterface $filter){
         $this->filter = $filter;
+        $this->setFilters();
     }
     
-    abstract protected function getActivity();
+    abstract protected function setFilters();    
+    abstract public function getActivity();
 }
